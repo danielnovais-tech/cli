@@ -5,6 +5,7 @@
  */
 
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import ignore from 'ignore';
 import picomatch from 'picomatch';
@@ -16,6 +17,40 @@ export interface LoadIgnoreRulesOptions {
   useGitignore: boolean;
   useGeminiignore: boolean;
   ignoreDirs: string[];
+}
+
+function getDefaultBlackboxSettingsPath(): string {
+  const overridden = process.env.BLACKBOX_SETTINGS_PATH;
+  if (overridden && overridden.trim() !== '') {
+    return overridden;
+  }
+
+  return path.join(os.homedir(), '.blackbox', 'settings.json');
+}
+
+function loadGlobalExcludePatterns(settingsPath?: string): string[] {
+  const resolvedPath = settingsPath ?? getDefaultBlackboxSettingsPath();
+  if (!fs.existsSync(resolvedPath)) {
+    return [];
+  }
+
+  try {
+    const raw = fs.readFileSync(resolvedPath, 'utf8');
+    const parsed: unknown = JSON.parse(raw);
+
+    if (!parsed || typeof parsed !== 'object') {
+      return [];
+    }
+
+    const patterns = (parsed as { globalExcludes?: unknown }).globalExcludes;
+    if (!Array.isArray(patterns)) {
+      return [];
+    }
+
+    return patterns.filter((p): p is string => typeof p === 'string' && p.trim() !== '');
+  } catch {
+    return [];
+  }
 }
 
 export function loadIgnoreRules(options: LoadIgnoreRulesOptions): Ignore {
@@ -32,6 +67,9 @@ export function loadIgnoreRules(options: LoadIgnoreRulesOptions): Ignore {
     if (fs.existsSync(geminiignorePath)) {
       ignorer.add(fs.readFileSync(geminiignorePath, 'utf8'));
     }
+
+    // Also apply user-level global exclusion patterns.
+    ignorer.add(loadGlobalExcludePatterns());
   }
 
   const ignoreDirs = ['.git', ...options.ignoreDirs];

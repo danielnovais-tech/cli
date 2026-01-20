@@ -5,6 +5,7 @@
  */
 
 import { describe, it, expect, afterEach } from 'vitest';
+import path from 'node:path';
 import { Ignore, loadIgnoreRules } from './ignore.js';
 import { createTmpDir, cleanupTmpDir } from '@blackbox_ai/blackbox-cli-test-utils';
 
@@ -72,6 +73,8 @@ describe('loadIgnoreRules', () => {
     if (tmpDir) {
       await cleanupTmpDir(tmpDir);
     }
+
+    delete process.env.BLACKBOX_SETTINGS_PATH;
   });
 
   it('should load rules from .gitignore', async () => {
@@ -102,6 +105,45 @@ describe('loadIgnoreRules', () => {
     const fileFilter = ignore.getFileFilter();
     expect(fileFilter('test.log')).toBe(true);
     expect(fileFilter('test.txt')).toBe(false);
+  });
+
+  it('should load rules from global excludes settings.json', async () => {
+    tmpDir = await createTmpDir({
+      'settings.json': JSON.stringify({ globalExcludes: ['dist/', '*.log'] }),
+    });
+    process.env.BLACKBOX_SETTINGS_PATH = path.join(tmpDir, 'settings.json');
+
+    const ignore = loadIgnoreRules({
+      projectRoot: tmpDir,
+      useGitignore: false,
+      useGeminiignore: true,
+      ignoreDirs: [],
+    });
+
+    const dirFilter = ignore.getDirectoryFilter();
+    const fileFilter = ignore.getFileFilter();
+    expect(dirFilter('dist/')).toBe(true);
+    expect(fileFilter('test.log')).toBe(true);
+    expect(fileFilter('test.txt')).toBe(false);
+  });
+
+  it('should not apply global excludes when useGeminiignore is false', async () => {
+    tmpDir = await createTmpDir({
+      'settings.json': JSON.stringify({ globalExcludes: ['dist/', '*.log'] }),
+    });
+    process.env.BLACKBOX_SETTINGS_PATH = path.join(tmpDir, 'settings.json');
+
+    const ignore = loadIgnoreRules({
+      projectRoot: tmpDir,
+      useGitignore: false,
+      useGeminiignore: false,
+      ignoreDirs: [],
+    });
+
+    const dirFilter = ignore.getDirectoryFilter();
+    const fileFilter = ignore.getFileFilter();
+    expect(dirFilter('dist/')).toBe(false);
+    expect(fileFilter('test.log')).toBe(false);
   });
 
   it('should combine rules from .gitignore and .blackboxignore', async () => {
