@@ -17,14 +17,14 @@ rm -rf "$(npm config get cache)/_npx"
 
 **For Windows**
 
-_Command Prompt_
+`_Command Prompt_`
 
 ```cmd
 :: The path is typically %LocalAppData%\npm-cache\_npx
 rmdir /s /q "%LocalAppData%\npm-cache\_npx"
 ```
 
-_PowerShell_
+`_PowerShell_`
 
 ```powershell
 # The path is typically $env:LocalAppData\npm-cache\_npx

@@ -29,27 +29,28 @@ The tool automatically converts HTML to text, handles GitHub blob URLs (converti
 
 Usage:
 
-```
+text
 web_fetch(url="https://example.com", prompt="Summarize the main points of this article")
-```
+
+```text
 
 ## `web_fetch` examples
 
 Summarize a single article:
 
-```
+```text
 web_fetch(url="https://example.com/news/latest", prompt="Can you summarize the main points of this article?")
 ```
 
 Extract specific information:
 
-```
+```text
 web_fetch(url="https://arxiv.org/abs/2401.0001", prompt="What are the key findings and methodology described in this paper?")
 ```
 
 Analyze GitHub documentation:
 
-```
+```text
 web_fetch(url="https://github.com/llmcod/Blackbox/blob/main/README.md", prompt="What are the installation steps and main features?")
 ```
 

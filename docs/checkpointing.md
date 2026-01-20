@@ -6,9 +6,9 @@ Blackbox Code includes a Checkpointing feature that automatically saves a snapsh
 
 When you approve a tool that modifies the file system (like `write_file` or `edit`), the CLI automatically creates a "checkpoint." This checkpoint includes:
 
-1.  **A Git Snapshot:** A commit is made in a special, shadow Git repository located in your home directory (`~/.blackboxcli/history/<project_hash>`). This snapshot captures the complete state of your project files at that moment. It does **not** interfere with your own project's Git repository.
-2.  **Conversation History:** The entire conversation you've had with the agent up to that point is saved.
-3.  **The Tool Call:** The specific tool call that was about to be executed is also stored.
+1. **A Git Snapshot:** A commit is made in a special, shadow Git repository located in your home directory (`~/.blackboxcli/history/<project_hash>`). This snapshot captures the complete state of your project files at that moment. It does **not** interfere with your own project's Git repository.
+2. **Conversation History:** The entire conversation you've had with the agent up to that point is saved.
+3. **The Tool Call:** The specific tool call that was about to be executed is also stored.
 
 If you want to undo the change or simply go back, you can use the `/restore` command. Restoring a checkpoint will:
 
@@ -52,7 +52,7 @@ Once enabled, checkpoints are created automatically. To manage them, you use the
 
 To see a list of all saved checkpoints for the current project, simply run:
 
-```
+```text
 /restore
 ```
 
@@ -62,13 +62,13 @@ The CLI will display a list of available checkpoint files. These file names are 
 
 To restore your project to a specific checkpoint, use the checkpoint file from the list:
 
-```
+```text
 /restore <checkpoint_file>
 ```
 
 For example:
 
-```
+```text
 /restore 2025-06-22T10-00-00_000Z-my-file.txt-write_file
 ```
 

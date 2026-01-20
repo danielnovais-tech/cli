@@ -446,12 +446,11 @@ function mergeSettings(
       ...(safeWorkspaceWithoutFolderTrust.contentGenerator || {}),
       ...(system.contentGenerator || {}),
     },
-    systemPromptMappings: {
-      ...(systemDefaults.systemPromptMappings || {}),
-      ...(user.systemPromptMappings || {}),
-      ...(safeWorkspaceWithoutFolderTrust.systemPromptMappings || {}),
-      ...(system.systemPromptMappings || {}),
-    },
+    systemPromptMappings:
+      system.systemPromptMappings ||
+      safeWorkspaceWithoutFolderTrust.systemPromptMappings ||
+      user.systemPromptMappings ||
+      systemDefaults.systemPromptMappings,
     extensions: {
       ...(systemDefaults.extensions || {}),
       ...(user.extensions || {}),

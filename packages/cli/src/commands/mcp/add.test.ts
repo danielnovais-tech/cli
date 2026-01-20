@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { vi, type Mock } from 'vitest';
 import yargs from 'yargs';
 import { addCommand } from './add.js';
 import { loadSettings, SettingScope } from '../../config/settings.js';
@@ -21,21 +22,32 @@ vi.mock('../../config/settings.js', async () => {
   };
 });
 
-const mockedLoadSettings = loadSettings as vi.Mock;
+const mockedLoadSettings = vi.mocked(loadSettings);
 
 describe('mcp add command', () => {
-  let parser: yargs.Argv;
-  let mockSetValue: vi.Mock;
+  let parser: ReturnType<typeof yargs>;
+  let mockSetValue: Mock;
 
   beforeEach(() => {
     vi.resetAllMocks();
     const yargsInstance = yargs([]).command(addCommand);
     parser = yargsInstance;
     mockSetValue = vi.fn();
+    
+    const mockSettingsFile = { settings: {}, path: '/mock/path/settings.json' };
+    
     mockedLoadSettings.mockReturnValue({
-      forScope: () => ({ settings: {} }),
+      system: mockSettingsFile,
+      systemDefaults: mockSettingsFile,
+      user: mockSettingsFile,
+      workspace: mockSettingsFile,
+      errors: [],
+      isTrusted: true,
+      migratedInMemorScopes: new Set(),
+      merged: {},
+      forScope: () => mockSettingsFile,
       setValue: mockSetValue,
-    });
+    } as any);
   });
 
   it('should add a stdio server to project settings', async () => {
@@ -122,8 +134,8 @@ describe('mcp add command', () => {
 
   describe('preset configurations', () => {
     it('should add remote-code preset with BLACKBOX_API_KEY', async () => {
-      const originalEnv = process.env.BLACKBOX_API_KEY;
-      process.env.BLACKBOX_API_KEY = 'test-api-key-123';
+      const originalEnv = process.env['BLACKBOX_API_KEY'];
+      process.env['BLACKBOX_API_KEY'] = 'test-api-key-123';
 
       try {
         await parser.parseAsync('add remote-code');
@@ -141,16 +153,16 @@ describe('mcp add command', () => {
         );
       } finally {
         if (originalEnv !== undefined) {
-          process.env.BLACKBOX_API_KEY = originalEnv;
+          process.env['BLACKBOX_API_KEY'] = originalEnv;
         } else {
-          delete process.env.BLACKBOX_API_KEY;
+          delete process.env['BLACKBOX_API_KEY'];
         }
       }
     });
 
     it('should fail when remote-code preset is used without BLACKBOX_API_KEY', async () => {
-      const originalEnv = process.env.BLACKBOX_API_KEY;
-      delete process.env.BLACKBOX_API_KEY;
+      const originalEnv = process.env['BLACKBOX_API_KEY'];
+      delete process.env['BLACKBOX_API_KEY'];
 
       const mockExit = vi
         .spyOn(process, 'exit')
@@ -170,14 +182,14 @@ describe('mcp add command', () => {
         mockExit.mockRestore();
         mockConsoleError.mockRestore();
         if (originalEnv !== undefined) {
-          process.env.BLACKBOX_API_KEY = originalEnv;
+          process.env['BLACKBOX_API_KEY'] = originalEnv;
         }
       }
     });
 
     it('should allow custom options to override preset defaults', async () => {
-      const originalEnv = process.env.BLACKBOX_API_KEY;
-      process.env.BLACKBOX_API_KEY = 'test-api-key-123';
+      const originalEnv = process.env['BLACKBOX_API_KEY'];
+      process.env['BLACKBOX_API_KEY'] = 'test-api-key-123';
 
       try {
         await parser.parseAsync(
@@ -197,9 +209,9 @@ describe('mcp add command', () => {
         );
       } finally {
         if (originalEnv !== undefined) {
-          process.env.BLACKBOX_API_KEY = originalEnv;
+          process.env['BLACKBOX_API_KEY'] = originalEnv;
         } else {
-          delete process.env.BLACKBOX_API_KEY;
+          delete process.env['BLACKBOX_API_KEY'];
         }
       }
     });

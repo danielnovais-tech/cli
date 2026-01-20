@@ -36,7 +36,7 @@ The assistant will not use this tool for simple, single-step tasks or purely inf
 
 Creating a feature implementation plan:
 
-```
+```text
 todo_write(todos=[
   {
     "id": "create-model",

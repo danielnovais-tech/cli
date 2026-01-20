@@ -20,8 +20,8 @@ describe('mcp command', () => {
   it('should have exactly one option (help flag)', () => {
     // Test to ensure that the global 'gemini' flags are not added to the mcp command
     const yargsInstance = yargs();
-    const builtYargs = mcpCommand.builder(yargsInstance);
-    const options = builtYargs.getOptions();
+    const builtYargs = (mcpCommand.builder as (yargs: Argv) => Argv)(yargsInstance);
+    const options = (builtYargs as any).getOptions();
 
     // Should have exactly 1 option (help flag)
     expect(Object.keys(options.key).length).toBe(1);
@@ -35,7 +35,7 @@ describe('mcp command', () => {
       version: vi.fn().mockReturnThis(),
     };
 
-    mcpCommand.builder(mockYargs as unknown as Argv);
+    (mcpCommand.builder as (yargs: Argv) => Argv)(mockYargs as unknown as Argv);
 
     expect(mockYargs.command).toHaveBeenCalledTimes(3);
 

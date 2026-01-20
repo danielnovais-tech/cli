@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, afterAll, vi, type MockedFunction } from 'vitest';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
@@ -34,9 +34,9 @@ vi.mock('simple-git', () => ({
 }));
 
 vi.mock('os', async (importOriginal) => {
-  const os = await importOriginal<typeof os>();
+  const actualOs = await importOriginal<typeof import('os')>();
   return {
-    ...os,
+    ...actualOs,
     homedir: vi.fn(),
   };
 });
@@ -358,7 +358,7 @@ describe('installExtension', () => {
       );
     });
 
-    const mockedSimpleGit = simpleGit as vi.MockedFunction<typeof simpleGit>;
+    const mockedSimpleGit = simpleGit as MockedFunction<typeof simpleGit>;
     mockedSimpleGit.mockReturnValue({ clone } as unknown as SimpleGit);
 
     await installExtension({ source: gitUrl, type: 'git' });
@@ -581,7 +581,7 @@ describe('updateExtension', () => {
       );
     });
 
-    const mockedSimpleGit = simpleGit as vi.MockedFunction<typeof simpleGit>;
+    const mockedSimpleGit = simpleGit as MockedFunction<typeof simpleGit>;
     mockedSimpleGit.mockReturnValue({
       clone,
     } as unknown as SimpleGit);

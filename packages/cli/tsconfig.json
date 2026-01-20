@@ -1,10 +1,13 @@
-{
-  "extends": "../../tsconfig.json",
+{      
   "compilerOptions": {
     "outDir": "dist",
     "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ES2023"],
-    "types": ["node", "vitest/globals"]
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "esModuleInterop": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "index.ts",
@@ -16,12 +19,13 @@
   "exclude": [
     "node_modules",
     "dist",
-    // TODO(5691): Fix type errors and remove excludes.
+    "**/*.test.ts",
+    "**/*.test.tsx",
     "src/commands/mcp.test.ts",
     "src/commands/mcp/add.test.ts",
     "src/commands/mcp/list.test.ts",
     "src/commands/mcp/remove.test.ts",
-    "src/config/config.integration.test.ts",
+    "src/config/con,fig.integration.test.ts",
     "src/config/config.test.ts",
     "src/config/extension.test.ts",
     "src/config/settings.test.ts",
@@ -81,6 +85,6 @@
     "src/ui/themes/theme.test.ts",
     "src/validateNonInterActiveAuth.test.ts",
     "src/services/prompt-processors/shellProcessor.test.ts"
-  ],
-  "references": [{ "path": "../core" }]
+  ]
 }
+

@@ -2,70 +2,70 @@
 
 Blackbox Code supports two main authentication methods to access AI models. Choose the method that best fits your use case:
 
-1.  **Blackbox OAuth (Recommended):**
-    - Use this option to log in with your blackbox.ai account.
-    - During initial startup, Blackbox Code will direct you to the blackbox.ai authentication page. Once authenticated, your credentials will be cached locally so the web login can be skipped on subsequent runs.
-    - **Requirements:**
-      - Valid blackbox.ai account
-      - Internet connection for initial authentication
-    - **Benefits:**
-      - Seamless access to Blackbox models
-      - Automatic credential refresh
-      - No manual API key management required
-      - **Automatic Remote Code MCP Server setup** - When you configure BlackboxAI as your provider, the CLI automatically sets up the remote-code MCP server, giving you access to powerful remote execution capabilities with multi-agent support
-
-    **Getting Started:**
+1. **Blackbox OAuth (Recommended):**
+   - Use this option to log in with your blackbox.ai account.
+     - During initial startup, Blackbox Code will direct you to the blackbox.ai authentication page. Once authenticated, your credentials will be cached locally so the web login can be skipped on subsequent runs.
+     - **Requirements:**
+       - Valid blackbox.ai account
+       - Internet connection for initial authentication
+     - **Benefits:**
+       - Seamless access to Blackbox models
+       - Automatic credential refresh
+       - No manual API key management required
+       - **Automatic Remote Code MCP Server setup** - When you configure BlackboxAI as your provider, the CLI automatically sets up the remote-code MCP server, giving you access to powerful remote execution capabilities with multi-agent support
+  
+     **Getting Started:**
 
     ```bash
     # Start Blackbox Code and follow the OAuth flow
     blackbox
     ```
 
-    The CLI will automatically open your browser and guide you through the authentication process.
-    
-    **Note:** When you select BlackboxAI as your provider during the initial setup or via the `/auth` command, the remote-code MCP server will be automatically configured for your project. This provides access to remote task execution, GitHub integration, and multi-agent coding capabilities.
+   The CLI will automatically open your browser and guide you through the authentication process.
 
-    **For users who authenticate using their blackbox.ai account:**
+   **Note:** When you select BlackboxAI as your provider during the initial setup or via the `/auth` command, the remote-code MCP server will be automatically configured for your project. This provides access to remote task execution, GitHub integration, and multi-agent coding capabilities.
 
-    **Quota:**
-    - 60 requests per minute
-    - 2,000 requests per day
-    - Token usage is not applicable
+   **For users who authenticate using their blackbox.ai account:**
 
-    **Cost:** Free
+   **Quota:**
+   - 60 requests per minute
+   - 2,000 requests per day
+   - Token usage is not applicable
 
-    **Notes:** A specific quota for different models is not specified; model fallback may occur to preserve shared experience quality.
+   **Cost:** Free
 
-2.  **<a id="openai-api"></a>OpenAI-Compatible API:**
-    - Use API keys for OpenAI or other compatible providers.
-    - This method allows you to use various AI models through API keys.
+   **Notes:** A specific quota for different models is not specified; model fallback may occur to preserve shared experience quality.
 
-    **Configuration Methods:**
+2. **<a id="openai-api"></a>OpenAI-Compatible API:**
+   - Use API keys for OpenAI or other compatible providers.
+   - This method allows you to use various AI models through API keys.
 
-    a) **Environment Variables:**
+     **Configuration Methods:**
+  
+     a) **Environment Variables:**
 
-    ```bash
-    export OPENAI_API_KEY="your_api_key_here"
-    export OPENAI_BASE_URL="your_api_endpoint"  # Optional
-    export OPENAI_MODEL="your_model_choice"     # Optional
-    ```
+     ```bash
+     export OPENAI_API_KEY="your_api_key_here"
+     export OPENAI_BASE_URL="your_api_endpoint"  # Optional
+     export OPENAI_MODEL="your_model_choice"     # Optional
+     ```
+  
+  b) **Project `.env` File:**
+  Create a `.env` file in your project root:
 
-    b) **Project `.env` File:**
-    Create a `.env` file in your project root:
+  ```env
+ OPENAI_API_KEY=your_api_key_here
+ OPENAI_BASE_URL=your_api_endpoint
+   OPENAI_MODEL=your_model_choice
+  ```
 
-    ```env
-    OPENAI_API_KEY=your_api_key_here
-    OPENAI_BASE_URL=your_api_endpoint
-    OPENAI_MODEL=your_model_choice
-    ```
-
-    **Supported Providers:**
-    - OpenAI (https://platform.openai.com/api-keys)
-    - Alibaba Cloud Bailian
-    - ModelScope
-    - OpenRouter
-    - Azure OpenAI
-    - Any OpenAI-compatible API
+  **Supported Providers:**
+     - OpenAI (https://platform.openai.com/api-keys)
+     - Alibaba Cloud Bailian
+     - ModelScope
+     - OpenRouter
+     - Azure OpenAI
+     - Any OpenAI-compatible API
 
 ## Switching Authentication Methods
 
@@ -127,10 +127,10 @@ Instead, you must configure authentication using environment variables.
 The CLI will automatically detect if it is running in a non-interactive terminal and will use the
 OpenAI-compatible API method if configured:
 
-1.  **OpenAI-Compatible API:**
-    - Set the `OPENAI_API_KEY` environment variable.
-    - Optionally set `OPENAI_BASE_URL` and `OPENAI_MODEL` for custom endpoints.
-    - The CLI will use these credentials to authenticate with the API provider.
+1. **OpenAI-Compatible API:**
+   - Set the `OPENAI_API_KEY` environment variable.
+   - Optionally set `OPENAI_BASE_URL` and `OPENAI_MODEL` for custom endpoints.
+   - The CLI will use these credentials to authenticate with the API provider.
 
 **Example for headless environments:**
 

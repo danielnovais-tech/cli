@@ -46,9 +46,10 @@ This guide provides solutions to common issues and debugging tips, including top
 - **Error: `MODULE_NOT_FOUND` or import errors.**
   - **Cause:** Dependencies are not installed correctly, or the project hasn't been built.
   - **Solution:**
-    1.  Run `npm install` to ensure all dependencies are present.
-    2.  Run `npm run build` to compile the project.
-    3.  Verify that the build completed successfully with `npm run start`.
+
+    1. Run `npm install` to ensure all dependencies are present.
+    2. Run `npm run build` to compile the project.
+    3. Verify that the build completed successfully with `npm run start`.
 
 - **Error: "Operation not permitted", "Permission denied", or similar.**
   - **Cause:** When sandboxing is enabled, Blackbox Code may attempt operations that are restricted by your sandbox configuration, such as writing outside the project directory or system temp directory.
@@ -99,11 +100,13 @@ The Blackbox Code uses specific exit codes to indicate the reason for terminatio
 - **Tool issues:**
   - If a specific tool is failing, try to isolate the issue by running the simplest possible version of the command or operation the tool performs.
   - For `run_shell_command`, check that the command works directly in your shell first.
-  - For _file system tools_, verify that paths are correct and check the permissions.
+  - For `_file system tools_`, verify that paths are correct and check the permissions.
 
 - **Pre-flight checks:**
   - Always run `npm run preflight` before committing code. This can catch many common issues related to formatting, linting, and type errors.
 
-## Existing GitHub Issues similar to yours or creating new Issues
+- **Network issues:**
+  - Verify your internet connection and any proxy settings that may affect connectivity.
 
-If you encounter an issue that was not covered here in this _Troubleshooting guide_, consider searching the Blackbox Code [Issue tracker on GitHub](https://github.com/llmcod/blackbox_cli/issues). If you can't find an issue similar to yours, consider creating a new GitHub Issue with a detailed description. Pull requests are also welcome!
+- **Environment variables:**
+  - Ensure all required environment variables are set correctly, especially for authentication and API access

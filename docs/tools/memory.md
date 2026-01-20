@@ -20,7 +20,7 @@ Once added, the facts are stored under a `## Blackbox Added Memories` section. T
 
 Usage:
 
-```
+```text
 save_memory(fact="Your fact here.")
 ```
 
@@ -28,13 +28,13 @@ save_memory(fact="Your fact here.")
 
 Remember a user preference:
 
-```
+```text
 save_memory(fact="My preferred programming language is Python.")
 ```
 
 Store a project-specific detail:
 
-```
+```text
 save_memory(fact="The project I'm currently working on is called 'blackbox-cli'.")
 ```
 

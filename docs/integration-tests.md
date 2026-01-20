@@ -20,7 +20,7 @@ npm run test:e2e
 
 ## Running a specific set of tests
 
-To run a subset of test files, you can use `npm run <integration test command> <file_name1> ....` where <integration test command> is either `test:e2e` or `test:integration*` and `<file_name>` is any of the `.test.js` files in the `integration-tests/` directory. For example, the following command runs `list_directory.test.js` and `write_file.test.js`:
+To run a subset of test files, you can use `npm run <integration test command> <file_name1> ....` where </integration test command> is either `test:e2e` or `test:integration*` and `<file_name>` is any of the `.test.js` files in the `integration-tests/` directory. For example, the following command runs `list_directory.test.js` and `write_file.test.js`:
 
 ```bash
 npm run test:e2e list_directory write_file
@@ -87,7 +87,7 @@ When using `VERBOSE=true` and `KEEP_OUTPUT=true` in the same command, the output
 
 The verbose output is formatted to clearly identify the source of the logs:
 
-```
+```bash
 --- TEST: <log dir>:<test-name> ---
 ... output from the blackbox command ...
 --- END TEST: <log dir>:<test-name> ---
@@ -117,7 +117,7 @@ The integration tests create a unique directory for each test run inside the `.i
 
 This structure makes it easy to locate the artifacts for a specific test run, file, or case.
 
-```
+```bash
 .integration-tests/
 └── <run-id>/
     └── <test-file-name>.test.js/

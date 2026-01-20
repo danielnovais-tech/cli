@@ -96,7 +96,7 @@ Blackbox Code provides a comprehensive suite of tools for interacting with the l
   - Limits results to a maximum of 20 matches by default to prevent context overflow. When results are truncated, shows a clear warning with guidance on refining searches.
 - **Output (`llmContent`):** A formatted string of matches, e.g.:
 
-  ```
+  ```text
   Found 3 matches for pattern "myFunction" in path "." (filter: "*.ts"):
   ---
   File: src/utils.ts
@@ -120,19 +120,19 @@ Blackbox Code provides a comprehensive suite of tools for interacting with the l
 
 Search for a pattern with default result limiting:
 
-```
+```text
 search_file_content(pattern="function\s+myFunction", path="src")
 ```
 
 Search for a pattern with custom result limiting:
 
-```
+```text
 search_file_content(pattern="function", path="src", maxResults=50)
 ```
 
 Search for a pattern with file filtering and custom result limiting:
 
-```
+```text
 search_file_content(pattern="function", include="*.js", maxResults=10)
 ```
 
@@ -147,7 +147,7 @@ search_file_content(pattern="function", include="*.js", maxResults=10)
   - `file_path` (string, required): The absolute path to the file to modify.
   - `old_string` (string, required): The exact literal text to replace.
 
-    **CRITICAL:** This string must uniquely identify the single instance to change. It should include at least 3 lines of context _before_ and _after_ the target text, matching whitespace and indentation precisely. If `old_string` is empty, the tool attempts to create a new file at `file_path` with `new_string` as content.
+    **CRITICAL:** This string must uniquely identify the single instance to change. It should include at least 3 lines of context before and after the target text, matching whitespace and indentation precisely. If `old_string` is empty, the tool attempts to create a new file at `file_path` with `new_string` as content.
 
   - `new_string` (string, required): The exact literal text to replace `old_string` with.
   - `expected_replacements` (number, optional): The number of occurrences to replace. Defaults to `1`.

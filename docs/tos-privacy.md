@@ -9,13 +9,6 @@ Blackbox Code supports two main authentication methods to access AI models. Your
 1. **Blackbox OAuth** - Log in with your blackbox.ai account
 2. **OpenAI-Compatible API** - Use API keys from various AI model providers
 
-For each authentication method, different Terms of Service and Privacy Notices may apply depending on the underlying service provider.
-
-| Authentication Method | Provider          | Terms of Service                                                              | Privacy Notice                                       |
-| :-------------------- | :---------------- | :---------------------------------------------------------------------------- | :--------------------------------------------------- |
-| Blackbox OAuth            | Blackbox AI           | [Blackbox Terms of Service](https://blackbox.ai/termsservice)                         | [Blackbox Privacy Policy](https://blackbox.ai/privacypolicy) |
-| OpenAI-Compatible API | Various Providers | Depends on your chosen API provider (OpenAI, Alibaba Cloud, ModelScope, etc.) | Depends on your chosen API provider                  |
-
 ## 1. If you are using Blackbox OAuth Authentication
 
 When you authenticate using your blackbox.ai account, these Terms of Service and Privacy Notice documents apply:

@@ -446,7 +446,7 @@ This displays:
 
 ### Example `/mcp` Output
 
-```
+```text
 MCP Servers Status:
 
 📡 pythonTools (CONNECTED)
@@ -616,9 +616,9 @@ Here is an example of a valid JSON response from an MCP tool that returns both a
 
 When Blackbox Code receives this response, it will:
 
-1.  Extract all the text and combine it into a single `functionResponse` part for the model.
-2.  Present the image data as a separate `inlineData` part.
-3.  Provide a clean, user-friendly summary in the CLI, indicating that both text and an image were received.
+1. Extract all the text and combine it into a single `functionResponse` part for the model.
+2. Present the image data as a separate `inlineData` part.
+3. Provide a clean, user-friendly summary in the CLI, indicating that both text and an image were received.
 
 This enables you to build sophisticated tools that can provide rich, multi-modal context to the Blackbox model.
 
@@ -709,8 +709,8 @@ blackbox mcp add [options] <name> [commandOrUrl] [args...]
 
 **Options (Flags):**
 
-- `-s, --scope`: Configuration scope (user or project). [default: "project"]
-- `-t, --transport`: Transport type (stdio, sse, http). [default: "stdio"]
+- `-s, --scope`: Configuration scope (user or project). \[default: "project"\]
+- `-t, --transport`: Transport type (stdio, sse, http). \[default: "stdio"\]
 - `-e, --env`: Set environment variables (e.g. -e KEY=value).
 - `-H, --header`: Set HTTP headers for SSE and HTTP transports (e.g. -H "X-Api-Key: abc123" -H "Authorization: Bearer abc123").
 - `--timeout`: Set connection timeout in milliseconds.
@@ -743,6 +743,7 @@ blackbox mcp add remote-code --scope user
 ```
 
 The preset will automatically:
+
 - Configure the correct SSE endpoint URL
 - Add the `Authorization: Bearer <your-key>` header
 - Set an appropriate description

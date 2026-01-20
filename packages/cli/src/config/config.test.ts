@@ -741,18 +741,19 @@ describe('Hierarchical Memory Loading (config.ts) - Placeholder Suite', () => {
   // 3. Spies on console functions (for logger output) are correctly set up if needed.
   // Example of a previously failing test structure:
   it.skip('should correctly use mocked homedir for global path', async () => {
-    const MOCK_GEMINI_DIR_LOCAL = path.join('/mock/home/user', '.blackboxcli');
-    const MOCK_GLOBAL_PATH_LOCAL = path.join(MOCK_GEMINI_DIR_LOCAL, 'BLACKBOX.md');
-    mockFs({
-      [MOCK_GLOBAL_PATH_LOCAL]: { type: 'file', content: 'GlobalContentOnly' },
-    });
-    const memory = await loadHierarchicalGeminiMemory('/some/other/cwd', false);
-    expect(memory).toBe('GlobalContentOnly');
-    expect(vi.mocked(os.homedir)).toHaveBeenCalled();
-    expect(fsPromises.readFile).toHaveBeenCalledWith(
-      MOCK_GLOBAL_PATH_LOCAL,
-      'utf-8',
-    );
+    // const MOCK_GEMINI_DIR_LOCAL = path.join('/mock/home/user', '.blackboxcli');
+    // const MOCK_GLOBAL_PATH_LOCAL = path.join(MOCK_GEMINI_DIR_LOCAL, 'BLACKBOX.md');
+    // mockFs would be needed here to simulate file system
+    // mockFs({
+    //   [MOCK_GLOBAL_PATH_LOCAL]: { type: 'file', content: 'GlobalContentOnly' },
+    // });
+    // const memory = await loadHierarchicalGeminiMemory('/some/other/cwd', false);
+    // expect(memory).toBe('GlobalContentOnly');
+    // expect(vi.mocked(os.homedir)).toHaveBeenCalled();
+    // expect(fsPromises.readFile).toHaveBeenCalledWith(
+    //   MOCK_GLOBAL_PATH_LOCAL,
+    //   'utf-8',
+    // );
   });
 });
 
@@ -791,7 +792,7 @@ describe('mergeMcpServers', () => {
 describe('loadCliConfig systemPromptMappings', () => {
   it('should use default systemPromptMappings when not provided in settings', async () => {
     const mockSettings: Settings = {
-      theme: 'dark',
+      ui: { theme: 'dark' },
     };
     const mockExtensions: Extension[] = [];
     const mockSessionId = 'test-session';
@@ -828,7 +829,7 @@ describe('loadCliConfig systemPromptMappings', () => {
       },
     ];
     const mockSettings: Settings = {
-      theme: 'dark',
+      ui: { theme: 'dark' },
       systemPromptMappings: customSystemPromptMappings,
     };
     const mockExtensions: Extension[] = [];

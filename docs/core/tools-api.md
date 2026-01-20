@@ -52,18 +52,18 @@ Each of these tools extends `BaseTool` and implements the required methods for i
 
 ## Tool Execution Flow
 
-1.  **Model Request:** The model, based on the user's prompt and the provided tool schemas, decides to use a tool and returns a `FunctionCall` part in its response, specifying the tool name and arguments.
-2.  **Core Receives Request:** The core parses this `FunctionCall`.
-3.  **Tool Retrieval:** It looks up the requested tool in the `ToolRegistry`.
-4.  **Parameter Validation:** The tool's `validateToolParams()` method is called.
-5.  **Confirmation (if needed):**
+1. **Model Request:** The model, based on the user's prompt and the provided tool schemas, decides to use a tool and returns a `FunctionCall` part in its response, specifying the tool name and arguments.
+2. **Core Receives Request:** The core parses this `FunctionCall`.
+3. **Tool Retrieval:** It looks up the requested tool in the `ToolRegistry`.
+4. **Parameter Validation:** The tool's `validateToolParams()` method is called.
+5. **Confirmation (if needed):**
     - The tool's `shouldConfirmExecute()` method is called.
     - If it returns details for confirmation, the core communicates this back to the CLI, which prompts the user.
     - The user's decision (e.g., proceed, cancel) is sent back to the core.
-6.  **Execution:** If validated and confirmed (or if no confirmation is needed), the core calls the tool's `execute()` method with the provided arguments and an `AbortSignal` (for potential cancellation).
-7.  **Result Processing:** The `ToolResult` from `execute()` is received by the core.
-8.  **Response to Model:** The `llmContent` from the `ToolResult` is packaged as a `FunctionResponse` and sent back to the model so it can continue generating a user-facing response.
-9.  **Display to User:** The `returnDisplay` from the `ToolResult` is sent to the CLI to show the user what the tool did.
+6. **Execution:** If validated and confirmed (or if no confirmation is needed), the core calls the tool's `execute()` method with the provided arguments and an `AbortSignal` (for potential cancellation).
+7. **Result Processing:** The `ToolResult` from `execute()` is received by the core.
+8. **Response to Model:** The `llmContent` from the `ToolResult` is packaged as a `FunctionResponse` and sent back to the model so it can continue generating a user-facing response.
+9. **Display to User:** The `returnDisplay` from the `ToolResult` is sent to the CLI to show the user what the tool did.
 
 ## Extending with Custom Tools
 

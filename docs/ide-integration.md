@@ -29,9 +29,9 @@ When you run Blackbox Code inside a supported editor, it will automatically dete
 
 ### 2. Manual Installation from CLI
 
-If you previously dismissed the prompt or want to install the extension manually, you can run the following command inside Blackbox Code:
+You can install the IDE companion extension directly from the Blackbox Code CLI by running:
 
-```
+```bash
 /ide install
 ```
 
@@ -56,11 +56,14 @@ You can also install the extension directly from a marketplace.
 You can control the IDE integration from within the CLI:
 
 - To enable the connection to the IDE, run:
-  ```
+
+  ```bash
   /ide enable
   ```
+
 - To disable the connection, run:
-  ```
+
+  ```bash
   /ide disable
   ```
 
@@ -70,7 +73,7 @@ When enabled, Blackbox Code will automatically attempt to connect to the IDE com
 
 To check the connection status and see the context the CLI has received from the IDE, run:
 
-```
+```bash
 /ide status
 ```
 
@@ -116,8 +119,8 @@ If you encounter issues with IDE integration, here are some common error message
 - **Message:** `🔴 Disconnected: Failed to connect to IDE companion extension for [IDE Name]. Please ensure the extension is running and try restarting your terminal. To install the extension, run /ide install.`
   - **Cause:** Blackbox Code could not find the necessary environment variables (`BLACKBOX_CODE_IDE_WORKSPACE_PATH` or `BLACKBOX_CODE_IDE_SERVER_PORT`) to connect to the IDE. This usually means the IDE companion extension is not running or did not initialize correctly.
   - **Solution:**
-    1.  Make sure you have installed the **Blackbox Code Companion** extension in your IDE and that it is enabled.
-    2.  Open a new terminal window in your IDE to ensure it picks up the correct environment.
+    1. Make sure you have installed the **Blackbox Code Companion** extension in your IDE and that it is enabled.
+    2. Open a new terminal window in your IDE to ensure it picks up the correct environment.
 
 - **Message:** `🔴 Disconnected: IDE connection error. The connection was lost unexpectedly. Please try reconnecting by running /ide enable`
   - **Cause:** The connection to the IDE companion was lost.

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { AuthType } from '@blackbox_ai/blackbox-cli-core';
 import { loadEnvironment, type LoadedSettings, SettingScope } from './settings.js';
 
 export const validateAuthMethod = (authMethod: string): string | null => {
@@ -145,6 +144,19 @@ export const setXaiBaseUrl = (baseUrl: string): void => {
 export const setXaiModel = (model: string): void => {
   process.env['XAI_MODEL'] = model;
 };
+
+export const AuthType = {
+  OAUTH: 'oauth',
+  API_KEY: 'api_key',
+  BASIC: 'basic',
+  LOGIN_WITH_GOOGLE: 'login_with_google',
+  CLOUD_SHELL: 'cloud_shell',
+  USE_GEMINI: 'use_gemini',
+  USE_VERTEX_AI: 'use_vertex_ai',
+  USE_OPENAI: 'use_openai',
+  BLACKBOX_OAUTH: 'blackbox_oauth',
+  USE_BLACKBOX_API: 'use_blackbox_api'
+} as const;
 
 /**
  * Save provider credentials to settings file for persistence across sessions
@@ -356,7 +368,7 @@ export const loadProviderCredentialsFromSettings = (
   } else {
     // Fallback: If selectedProvider is not set, try to load based on selectedType
     // This provides backward compatibility with older configurations
-    const selectedType = merged.security?.auth?.selectedType;
+    const selectedType = merged.security?.auth?.selectedType as string | undefined;
     
     if (selectedType === AuthType.USE_OPENAI) {
       // Try OpenAI first, then OpenRouter

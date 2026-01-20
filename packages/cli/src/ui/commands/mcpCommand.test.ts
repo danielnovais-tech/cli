@@ -55,10 +55,12 @@ const createMockMCPTool = (
       tool: vi.fn(),
     } as unknown as CallableTool,
     serverName,
-    name,
+    name, // serverToolName
     description || `Description for ${name}`,
     { type: Type.OBJECT, properties: {} },
-    name, // serverToolName same as name for simplicity
+    undefined, // timeout
+    undefined, // trust
+    name, // nameOverride
   );
 
 describe('mcpCommand', () => {
@@ -504,7 +506,9 @@ describe('mcpCommand', () => {
           },
           required: ['param1'],
         },
-        'tool1',
+        undefined, // timeout
+        undefined, // trust
+        'tool1', // nameOverride
       );
 
       const tool2 = new DiscoveredMCPTool(
@@ -519,7 +523,9 @@ describe('mcpCommand', () => {
           },
           required: ['param2'],
         },
-        'tool2',
+        undefined, // timeout
+        undefined, // trust
+        'tool2', // nameOverride
       );
 
       const mockServerTools = [tool1, tool2];

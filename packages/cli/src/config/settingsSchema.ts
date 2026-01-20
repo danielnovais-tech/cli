@@ -1136,7 +1136,9 @@ export const SETTINGS_SCHEMA = {
     label: 'System Prompt Mappings',
     category: 'General',
     requiresRestart: false,
-    default: undefined as Record<string, string> | undefined,
+    default: undefined as
+      | Array<{ baseUrls: string[]; modelNames: string[]; template: string }>
+      | undefined,
     description: 'Mappings of system prompts to model names.',
     showInDialog: false,
   },
@@ -1172,7 +1174,7 @@ export const SETTINGS_SCHEMA = {
     label: 'Default Approval Mode',
     category: 'General',
     requiresRestart: false,
-    default: 'default',
+    default: 'default' as string,
     description:
       'Default approval mode for tool usage. Valid values: plan, default, auto-edit, yolo.',
     showInDialog: true,

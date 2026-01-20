@@ -33,7 +33,7 @@ To add a file or directory to `.blackboxignore`:
 
 You can use `.blackboxignore` to ignore directories and files:
 
-```
+```text
 # Exclude your /packages/ directory and all subdirectories
 /packages/
 
@@ -43,14 +43,14 @@ apikeys.txt
 
 You can use wildcards in your `.blackboxignore` file with `*`:
 
-```
+```text
 # Exclude all .md files
 *.md
 ```
 
 Finally, you can exclude files and directories from exclusion with `!`:
 
-```
+```text
 # Exclude all .md files except README.md
 *.md
 !README.md

@@ -33,7 +33,7 @@ Subagents are independent AI assistants that:
 
 1. **Create your first subagent**:
 
-   ```
+   ```bash
    /agents create
    ```
 
@@ -41,7 +41,7 @@ Subagents are independent AI assistants that:
 
 2. **Manage existing agents**:
 
-   ```
+   ```bash
    /agents manage
    ```
 
@@ -52,7 +52,7 @@ Subagents are independent AI assistants that:
 
 ### Example Usage
 
-```
+```bash
 User: "Please write comprehensive tests for the authentication module"
 
 AI: I'll delegate this to your testing specialist subagent.
@@ -73,7 +73,7 @@ Creates a new subagent through a guided step wizard.
 
 **Usage:**
 
-```
+```bash
 /agents create
 ```
 
@@ -83,7 +83,7 @@ Opens an interactive management dialog for viewing and managing existing subagen
 
 **Usage:**
 
-```
+```bash
 /agents manage
 ```
 
@@ -149,7 +149,9 @@ To encourage more proactive subagent use, include phrases like "use PROACTIVELY"
 
 Request a specific subagent by mentioning it in your command:
 
-```
+```bash
+Use the testing-expert subagent to create unit tests for the payment module
+User: "
 > Let the testing-expert subagent create unit tests for the payment module
 > Have the documentation-writer subagent update the API reference
 > Get the react-specialist subagent to optimize this component's performance

@@ -1,6 +1,6 @@
 # Blackbox Code
 
-<div align="center">
+[div align="center"]
 
 ![Blackbox Code Screenshot](./docs/assets/blackbox-screenshot.png)
 

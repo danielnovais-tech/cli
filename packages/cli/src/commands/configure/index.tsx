@@ -27,9 +27,9 @@ async function runConfigure(): Promise<string | undefined> {
         debugKeystrokeLogging={false}
       >
         <ConfigureUI
-          onComplete={(providerName) => {
+          onComplete={(result) => {
             unmount();
-            resolve(providerName);
+            resolve(typeof result === 'string' ? result : result?.provider);
           }}
         />
       </KeypressProvider>,

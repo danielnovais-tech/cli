@@ -6,8 +6,8 @@ Blackbox Code supports extensions that can be used to configure and extend its f
 
 On startup, Blackbox Code looks for extensions in two locations:
 
-1.  `<workspace>/.blackboxcli/extensions`
-2.  `<home>/.blackboxcli/extensions`
+1. `<workspace>/.blackboxcli/extensions`
+2. `<home>/.blackboxcli/extensions`
 
 Blackbox Code loads all extensions from both locations. If an extension with the same name exists in both locations, the extension in the workspace directory takes precedence.
 
@@ -49,7 +49,7 @@ Extensions can provide [custom commands](./cli/commands.md#custom-commands) by p
 
 An extension named `gcp` with the following structure:
 
-```
+```bash
 .blackboxcli/extensions/gcp/
 ├── blackbox-extension.json
 └── commands/
@@ -88,13 +88,13 @@ You can install extensions using the `install` command. This command allows you 
 - `source <url> positional argument`: The URL of a Git repository to install the extension from. The repository must contain a `blackbox-extension.json` file in its root.
 - `--path <path>`: The path to a local directory to install as an extension. The directory must contain a `blackbox-extension.json` file.
 
-# Variables
+## Variables in Extensions
 
 Blackbox Code extensions allow variable substitution in `blackbox-extension.json`. This can be useful if e.g., you need the current directory to run an MCP server using `"cwd": "${extensionPath}${/}run.ts"`.
 
 **Supported variables:**
 
-| variable                   | description                                                                                                                                                   |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `${extensionPath}`         | The fully-qualified path of the extension in the user's filesystem e.g., '/Users/username/.blackboxcli/extensions/example-extension'. This will not unwrap symlinks. |
-| `${/} or ${pathSeparator}` | The path separator (differs per OS).                                                                                                                          |
+| variable | description |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `${extensionPath}` | The fully-qualified path of the extension in the user's filesystem e.g., '/Users/username/.blackboxcli/extensions/example-extension'. This will not unwrap symlinks. |
+| `${/} or ${pathSeparator}` | The path separator (differs per OS). |

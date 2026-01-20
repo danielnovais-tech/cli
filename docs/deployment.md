@@ -39,12 +39,15 @@ For security and isolation, Blackbox Code can be run inside a container. This is
 
 - **Directly from the Registry:**
   You can run the published sandbox image directly. This is useful for environments where you only have Docker and want to run the CLI.
+
   ```bash
   # Run the published sandbox image
   docker run --rm -it ghcr.io/blackbox_ai/blackbox-cli:0.0.7
   ```
+
 - **Using the `--sandbox` flag:**
   If you have Blackbox Code installed locally (using the standard installation described above), you can instruct it to run inside the sandbox container.
+
   ```bash
   blackbox --sandbox -y -p "your prompt here"
   ```
@@ -57,10 +60,17 @@ Contributors to the project will want to run the CLI directly from the source co
 
 - **Development Mode:**
   This method provides hot-reloading and is useful for active development.
+
   ```bash
   # From the root of the repository
   npm run start
   ```
+
+  ```bash
+  # From the cli/ directory
+  npm run start
+  ```
+
 - **Production-like mode (Linked package):**
   This method simulates a global installation by linking your local package. It's useful for testing a local build in a production workflow.
 
@@ -112,9 +122,9 @@ The Docker-based execution method is supported by the `blackbox-cli-sandbox` con
 
 The release process is automated through GitHub Actions. The release workflow performs the following actions:
 
-1.  Build the NPM packages using `tsc`.
-2.  Publish the NPM packages to the artifact registry.
-3.  Create GitHub releases with bundled assets.
+1. Build the NPM packages using `tsc`.
+2. Publish the NPM packages to the artifact registry.
+3. Create GitHub releases with bundled assets.
 
 ### Manual Publishing
 
@@ -142,18 +152,18 @@ If you need to manually publish packages to npm (for testing or emergency releas
 ```
 
 **Available Options:**
-- `--dry-run`: Test the publishing process without actually publishing
-- `--tag TAG`: Specify the npm tag (default: `latest`)
-- `--publish-vscode`: Also publish the VSCode IDE Companion extension
-- `--help`: Show usage information
+ `--dry-run`: Test the publishing process without actually publishing
+ `--tag TAG`: Specify the npm tag (default: `latest`)
+ `--publish-vscode`: Also publish the VSCode IDE Companion extension
+ `--help`: Show usage information
 
 **Important:** The script ensures the correct publishing order:
-1. Publishes `@blackbox_ai/blackbox-cli-core` first
-2. Waits for npm registry propagation (30 seconds)
-3. Updates the CLI package to reference the published core version
-4. Rebuilds the CLI package with the updated dependency
-5. Publishes `@blackbox_ai/blackbox-cli`
-6. Optionally publishes `blackbox-cli-vscode-ide-companion` (if `--publish-vscode` is used)
+1.Publishes `@blackbox_ai/blackbox-cli-core` first
+2.Waits for npm registry propagation (30 seconds)
+3.Updates the CLI package to reference the published core version
+4.Rebuilds the CLI package with the updated dependency
+5.Publishes `@blackbox_ai/blackbox-cli`
+6.Optionally publishes `blackbox-cli-vscode-ide-companion` (if `--publish-vscode` is used)
 
 This process is critical to avoid the `ERR_MODULE_NOT_FOUND` error that occurs when the CLI package references a local file path instead of the published npm package.
 
@@ -165,17 +175,21 @@ If you use `npm publish --workspaces` directly, it will publish all non-private 
 If users report `Cannot find package '@blackbox_ai/blackbox-cli-core'` errors:
 
 1. **Check the published CLI package:**
+
    ```bash
    npm view @blackbox_ai/blackbox-cli dependencies
    ```
+
+   Ensure that
    The `@blackbox_ai/blackbox-cli-core` dependency should show a version number (e.g., `0.0.2`), not a file path.
 
-2. **Verify both packages are published:**
+2.**Verify both packages are published:**
+
    ```bash
    npm view @blackbox_ai/blackbox-cli-core version
    npm view @blackbox_ai/blackbox-cli version
    ```
 
-3. **If the CLI package has the wrong dependency:**
-   - Republish using the manual publishing script
-   - Or trigger a new automated release through GitHub Actions
+3.**If the CLI package has the wrong dependency:**
+    Republish using the manual publishing script
+    Or trigger a new automated release through GitHub Actions

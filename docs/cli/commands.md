@@ -202,8 +202,8 @@ Custom commands allow you to save and reuse your favorite or most frequently use
 
 Blackbox Code discovers commands from two locations, loaded in a specific order:
 
-1.  **User Commands (Global):** Located in `~/.blackboxcli/commands/`. These commands are available in any project you are working on.
-2.  **Project Commands (Local):** Located in `<your-project-root>/.blackboxcli/commands/`. These commands are specific to the current project and can be checked into version control to be shared with your team.
+1. **User Commands (Global):** Located in `~/.blackboxcli/commands/`. These commands are available in any project you are working on.
+2. **Project Commands (Local):** Located in `<your-project-root>/.blackboxcli/commands/`. These commands are specific to the current project and can be checked into version control to be shared with your team.
 
 If a command in the project directory has the same name as a command in the user directory, the **project command will always be used.** This allows projects to override global commands with project-specific versions.
 
@@ -247,7 +247,7 @@ When used in the main body of the prompt, the arguments are injected exactly as 
 
 description = "Generates a fix for a given issue."
 prompt = "Please provide a code fix for the issue described here: {{args}}."
-```
+```toml
 
 The model receives: `Please provide a code fix for the issue described here: "Button is misaligned".`
 
@@ -324,11 +324,11 @@ When a custom command attempts to execute a shell command, Blackbox Code will no
 
 **How It Works:**
 
-1.  **Inject Commands:** Use the `!{...}` syntax.
-2.  **Argument Substitution:** If `{{args}}` is present inside the block, it is automatically shell-escaped (see [Context-Aware Injection](#1-context-aware-injection-with-args) above).
-3.  **Robust Parsing:** The parser correctly handles complex shell commands that include nested braces, such as JSON payloads. **Note:** The content inside `!{...}` must have balanced braces (`{` and `}`). If you need to execute a command containing unbalanced braces, consider wrapping it in an external script file and calling the script within the `!{...}` block.
-4.  **Security Check and Confirmation:** The CLI performs a security check on the final, resolved command (after arguments are escaped and substituted). A dialog will appear showing the exact command(s) to be executed.
-5.  **Execution and Error Reporting:** The command is executed. If the command fails, the output injected into the prompt will include the error messages (stderr) followed by a status line, e.g., `[Shell command exited with code 1]`. This helps the model understand the context of the failure.
+1. **Inject Commands:** Use the `!{...}` syntax.
+2. **Argument Substitution:** If `{{args}}` is present inside the block, it is automatically shell-escaped (see [Context-Aware Injection](#1-context-aware-injection-with-args) above).
+3. **Robust Parsing:** The parser correctly handles complex shell commands that include nested braces, such as JSON payloads. **Note:** The content inside `!{...}` must have balanced braces (`{` and `}`). If you need to execute a command containing unbalanced braces, consider wrapping it in an external script file and calling the script within the `!{...}` block.
+4. **Security Check and Confirmation:** The CLI performs a security check on the final, resolved command (after arguments are escaped and substituted). A dialog will appear showing the exact command(s) to be executed.
+5. **Execution and Error Reporting:** The command is executed. If the command fails, the output injected into the prompt will include the error messages (stderr) followed by a status line, e.g., `[Shell command exited with code 1]`. This helps the model understand the context of the failure.
 
 **Example (`git/commit.toml`):**
 
@@ -364,12 +364,12 @@ You can directly embed the content of a file or a directory listing into your pr
 - **Multimodal Support**: If the path points to a supported image (e.g., PNG, JPEG), PDF, audio, or video file, it will be correctly encoded and injected as multimodal input. Other binary files are handled gracefully and skipped.
 - **Directory Listing**: `@{path/to/dir}` is traversed and each file present within the directory and all subdirectories are inserted into the prompt. This respects `.gitignore` and `.blackboxignore` if enabled.
 - **Workspace-Aware**: The command searches for the path in the current directory and any other workspace directories. Absolute paths are allowed if they are within the workspace.
-- **Processing Order**: File content injection with `@{...}` is processed _before_ shell commands (`!{...}`) and argument substitution (`{{args}}`).
+- **Processing Order**: File content injection with `@{...}` is processed *before* shell commands (`!{...}`) and argument substitution (`{{args}}`).
 - **Parsing**: The parser requires the content inside `@{...}` (the path) to have balanced braces (`{` and `}`).
 
 **Example (`review.toml`):**
 
-This command injects the content of a _fixed_ best practices file (`docs/best-practices.md`) and uses the user's arguments to provide context for the review.
+This command injects the content of a *fixed* best practices file (`docs/best-practices.md`) and uses the user's arguments to provide context for the review.
 
 ```toml
 # In: <project>/.blackboxcli/commands/review.toml
@@ -428,7 +428,13 @@ Your response should include:
 
 That's it! You can now run your command in the CLI. First, you might add a file to the context, and then invoke your command:
 
-```
+```toml
+
+description = "Generates a fix for a given issue."
+prompt = "Please provide a code fix for the issue described here: {{args}}."
+
+When you run `/git:fix "Button is misaligned"`, the model receives: `Please provide a code fix for the issue described here: "Button is misaligned".`
+```bash
 > @my-messy-function.js
 > /refactor:pure
 ```
@@ -455,7 +461,7 @@ At commands are used to include the content of files or directories as part of y
   - **Output:** The CLI will show a tool call message indicating that `read_many_files` was used, along with a message detailing the status and the path(s) that were processed.
 
 - **`@` (Lone at symbol)**
-  - **Description:** If you type a lone `@` symbol without a path, the query is passed as-is to the model. This might be useful if you are specifically talking _about_ the `@` symbol in your prompt.
+  - **Description:** If you type a lone `@` symbol without a path, the query is passed as-is to the model. This might be useful if you are specifically talking *about* the `@` symbol in your prompt.
 
 ### Error handling for `@` commands
 

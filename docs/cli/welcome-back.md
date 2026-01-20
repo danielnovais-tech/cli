@@ -93,7 +93,7 @@ When exiting with `/quit-confirm` and choosing "Generate summary and quit":
 
 The Welcome Back feature creates and uses:
 
-```
+```text
 your-project/
 ├── .blackboxcli/
 │   └── PROJECT_SUMMARY.md    # Generated project summary

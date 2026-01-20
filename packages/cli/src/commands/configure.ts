@@ -18,19 +18,20 @@ import {
 import * as readline from 'node:readline';
 import { stdin as input, stdout as output } from 'node:process';
 
-interface ProviderConfig {
+export interface ProviderConfig {
   name: string;
   displayName: string;
   authType: AuthType;
   requiresApiKey: boolean;
   defaultBaseUrl?: string;
   defaultModel: string;
+  defaultModels?: string[];
   envKeyName?: string;
   envBaseUrlName?: string;
   envModelName?: string;
 }
 
-const PROVIDERS: ProviderConfig[] = [
+export const PROVIDERS: ProviderConfig[] = [
   {
     name: 'blackbox',
     displayName: 'BlackboxAI',

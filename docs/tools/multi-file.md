@@ -17,9 +17,9 @@ Use `read_many_files` to read content from multiple files specified by paths or 
 
 `read_many_files` takes the following arguments:
 
-- `paths` (list[string], required): An array of glob patterns or paths relative to the tool's target directory (e.g., `["src/**/*.ts"]`, `["README.md", "docs/*", "assets/logo.png"]`).
-- `exclude` (list[string], optional): Glob patterns for files/directories to exclude (e.g., `["**/*.log", "temp/"]`). These are added to default excludes if `useDefaultExcludes` is true.
-- `include` (list[string], optional): Additional glob patterns to include. These are merged with `paths` (e.g., `["*.test.ts"]` to specifically add test files if they were broadly excluded, or `["images/*.jpg"]` to include specific image types).
+- `paths` (list\[string], required): An array of glob patterns or paths relative to the tool's target directory (e.g., `["src/**/*.ts"]`, `["README.md", "docs/*", "assets/logo.png"]`).
+- `exclude` (list\[string], optional): Glob patterns for files/directories to exclude (e.g., `["**/*.log", "temp/"]`). These are added to default excludes if `useDefaultExcludes` is true.
+- `include` (list\[string], optional): Additional glob patterns to include. These are merged with `paths` (e.g., `["*.test.ts"]` to specifically add test files if they were broadly excluded, or `["images/*.jpg"]` to include specific image types).
 - `recursive` (boolean, optional): Whether to search recursively. This is primarily controlled by `**` in glob patterns. Defaults to `true`.
 - `useDefaultExcludes` (boolean, optional): Whether to apply a list of default exclusion patterns (e.g., `node_modules`, `.git`, non image/pdf binary files). Defaults to `true`.
 - `respect_git_ignore` (boolean, optional): Whether to respect .gitignore patterns when finding files. Defaults to true.
@@ -35,7 +35,7 @@ Use `read_many_files` to read content from multiple files specified by paths or 
 
 Usage:
 
-```
+```text
 read_many_files(paths=["Your files or paths here."], include=["Additional files to include."], exclude=["Files to exclude."], recursive=False, useDefaultExcludes=false, respect_git_ignore=true)
 ```
 
@@ -43,26 +43,26 @@ read_many_files(paths=["Your files or paths here."], include=["Additional files 
 
 Read all TypeScript files in the `src` directory:
 
-```
+```text
 read_many_files(paths=["src/**/*.ts"])
 ```
 
 Read the main README, all Markdown files in the `docs` directory, and a specific logo image, excluding a specific file:
 
-```
+```text
 read_many_files(paths=["README.md", "docs/**/*.md", "assets/logo.png"], exclude=["docs/OLD_README.md"])
 ```
 
 Read all JavaScript files but explicitly include test files and all JPEGs in an `images` folder:
 
-```
+```text
 read_many_files(paths=["**/*.js"], include=["**/*.test.js", "images/**/*.jpg"], useDefaultExcludes=False)
 ```
 
 ## Important notes
 
 - **Binary file handling:**
-  - **Image/PDF/Audio/Video files:** The tool can read common image types (PNG, JPEG, etc.), PDF, audio (mp3, wav), and video (mp4, mov) files, returning them as base64 encoded data. These files _must_ be explicitly targeted by the `paths` or `include` patterns (e.g., by specifying the exact filename like `video.mp4` or a pattern like `*.mov`).
+  - **Image/PDF/Audio/Video files:** The tool can read common image types (PNG, JPEG, etc.), PDF, audio (mp3, wav), and video (mp4, mov) files, returning them as base64 encoded data. These files *must* be explicitly targeted by the `paths` or `include` patterns (e.g., by specifying the exact filename like `video.mp4` or a pattern like `*.mov`).
   - **Other binary files:** The tool attempts to detect and skip other types of binary files by examining their initial content for null bytes. The tool excludes these files from its output.
 - **Performance:** Reading a very large number of files or very large individual files can be resource-intensive.
 - **Path specificity:** Ensure paths and glob patterns are correctly specified relative to the tool's target directory. For image/PDF files, ensure the patterns are specific enough to include them.

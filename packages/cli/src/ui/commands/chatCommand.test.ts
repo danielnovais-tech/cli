@@ -97,10 +97,7 @@ describe('chatCommand', () => {
     });
 
     it('should inform when no checkpoints are found', async () => {
-      mockFs.readdir.mockImplementation(
-        (async (_: string): Promise<string[]> =>
-          [] as string[]) as unknown as typeof fsPromises.readdir,
-      );
+      mockFs.readdir.mockResolvedValue([] as any);
       const result = await listCommand?.action?.(mockContext, '');
       expect(result).toEqual({
         type: 'message',
@@ -113,16 +110,13 @@ describe('chatCommand', () => {
       const fakeFiles = ['checkpoint-test1.json', 'checkpoint-test2.json'];
       const date = new Date();
 
-      mockFs.readdir.mockImplementation(
-        (async (_: string): Promise<string[]> =>
-          fakeFiles as string[]) as unknown as typeof fsPromises.readdir,
-      );
-      mockFs.stat.mockImplementation((async (path: string): Promise<Stats> => {
-        if (path.endsWith('test1.json')) {
-          return { mtime: date } as Stats;
+      mockFs.readdir.mockResolvedValue(fakeFiles as any);
+      mockFs.stat.mockImplementation((path: any) => {
+        if (typeof path === 'string' && path.endsWith('test1.json')) {
+          return Promise.resolve({ mtime: date } as Stats);
         }
-        return { mtime: new Date(date.getTime() + 1000) } as Stats;
-      }) as unknown as typeof fsPromises.stat);
+        return Promise.resolve({ mtime: new Date(date.getTime() + 1000) } as Stats);
+      });
 
       const result = (await listCommand?.action?.(
         mockContext,
@@ -149,7 +143,7 @@ describe('chatCommand', () => {
         toISOString: () => 'an-invalid-date-string',
       } as Date;
 
-      mockFs.readdir.mockResolvedValue(fakeFiles);
+      mockFs.readdir.mockResolvedValue(fakeFiles as any);
       mockFs.stat.mockResolvedValue({ mtime: badDate } as Stats);
 
       const result = (await listCommand?.action?.(
@@ -309,17 +303,9 @@ describe('chatCommand', () => {
     describe('completion', () => {
       it('should provide completion suggestions', async () => {
         const fakeFiles = ['checkpoint-alpha.json', 'checkpoint-beta.json'];
-        mockFs.readdir.mockImplementation(
-          (async (_: string): Promise<string[]> =>
-            fakeFiles as string[]) as unknown as typeof fsPromises.readdir,
-        );
+        mockFs.readdir.mockResolvedValue(fakeFiles as any);
 
-        mockFs.stat.mockImplementation(
-          (async (_: string): Promise<Stats> =>
-            ({
-              mtime: new Date(),
-            }) as Stats) as unknown as typeof fsPromises.stat,
-        );
+        mockFs.stat.mockResolvedValue({ mtime: new Date() } as Stats);
 
         const result = await resumeCommand?.completion?.(mockContext, 'a');
 
@@ -329,18 +315,13 @@ describe('chatCommand', () => {
       it('should suggest filenames sorted by modified time (newest first)', async () => {
         const fakeFiles = ['checkpoint-test1.json', 'checkpoint-test2.json'];
         const date = new Date();
-        mockFs.readdir.mockImplementation(
-          (async (_: string): Promise<string[]> =>
-            fakeFiles as string[]) as unknown as typeof fsPromises.readdir,
-        );
-        mockFs.stat.mockImplementation((async (
-          path: string,
-        ): Promise<Stats> => {
-          if (path.endsWith('test1.json')) {
-            return { mtime: date } as Stats;
+        mockFs.readdir.mockResolvedValue(fakeFiles as any);
+        mockFs.stat.mockImplementation((path: any) => {
+          if (typeof path === 'string' && path.endsWith('test1.json')) {
+            return Promise.resolve({ mtime: date } as Stats);
           }
-          return { mtime: new Date(date.getTime() + 1000) } as Stats;
-        }) as unknown as typeof fsPromises.stat);
+          return Promise.resolve({ mtime: new Date(date.getTime() + 1000) } as Stats);
+        });
 
         const result = await resumeCommand?.completion?.(mockContext, '');
         // Sort items by last modified time (newest first)
@@ -389,17 +370,9 @@ describe('chatCommand', () => {
     describe('completion', () => {
       it('should provide completion suggestions', async () => {
         const fakeFiles = ['checkpoint-alpha.json', 'checkpoint-beta.json'];
-        mockFs.readdir.mockImplementation(
-          (async (_: string): Promise<string[]> =>
-            fakeFiles as string[]) as unknown as typeof fsPromises.readdir,
-        );
+        mockFs.readdir.mockResolvedValue(fakeFiles as any);
 
-        mockFs.stat.mockImplementation(
-          (async (_: string): Promise<Stats> =>
-            ({
-              mtime: new Date(),
-            }) as Stats) as unknown as typeof fsPromises.stat,
-        );
+        mockFs.stat.mockResolvedValue({ mtime: new Date() } as Stats);
 
         const result = await deleteCommand?.completion?.(mockContext, 'a');
 

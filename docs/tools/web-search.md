@@ -23,7 +23,6 @@ The tool returns a concise answer with sources when possible.
 
 When using BLACKBOX AI as your provider (e.g.,`https://api.blackboxai.com/v1`), the tool automatically uses BLACKBOX AI's native web search capability:
 
-
 The tool uses the model `blackboxai/blackbox-search` to perform web searches and returns results with citations.
 
 ### With Other Providers (Tavily)
@@ -38,7 +37,7 @@ If the key is not configured and you're not using BLACKBOX AI, the tool will be 
 
 Usage:
 
-```
+```text
 web_search(query="Your query goes here.")
 ```
 
@@ -46,7 +45,7 @@ web_search(query="Your query goes here.")
 
 ### Example 1: Finding Latest News
 
-```
+```text
 web_search(query="latest releases from OpenAI")
 ```
 
@@ -54,7 +53,7 @@ web_search(query="latest releases from OpenAI")
 
 ### Example 2: Technical Information
 
-```
+```text
 web_search(query="React 19 new features and improvements")
 ```
 
@@ -62,7 +61,7 @@ web_search(query="React 19 new features and improvements")
 
 ### Example 3: Current Events
 
-```
+```text
 web_search(query="AI developments in January 2025")
 ```
 
@@ -70,7 +69,7 @@ web_search(query="AI developments in January 2025")
 
 ### Example 4: Best Practices
 
-```
+```text
 web_search(query="TypeScript error handling best practices 2025")
 ```
 
@@ -78,7 +77,7 @@ web_search(query="TypeScript error handling best practices 2025")
 
 ### Example 5: Product Comparisons
 
-```
+```text
 web_search(query="comparison of Next.js 15 vs Remix")
 ```
 
@@ -86,7 +85,7 @@ web_search(query="comparison of Next.js 15 vs Remix")
 
 ### Example 6: Documentation Lookup
 
-```
+```text
 web_search(query="Tailwind CSS v4 breaking changes")
 ```
 

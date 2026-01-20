@@ -6,13 +6,13 @@ Blackbox Code offers several ways to configure its behavior, including environme
 
 Configuration is applied in the following order of precedence (lower numbers are overridden by higher numbers):
 
-1.  **Default values:** Hardcoded defaults within the application.
-2.  **System defaults file:** System-wide default settings that can be overridden by other settings files.
-3.  **User settings file:** Global settings for the current user.
-4.  **Project settings file:** Project-specific settings.
-5.  **System settings file:** System-wide settings that override all other settings files.
-6.  **Environment variables:** System-wide or session-specific variables, potentially loaded from `.env` files.
-7.  **Command-line arguments:** Values passed when launching the CLI.
+1. **Default values:** Hardcoded defaults within the application.
+2. **System defaults file:** System-wide default settings that can be overridden by other settings files.
+3. **User settings file:** Global settings for the current user.
+4. **Project settings file:** Project-specific settings.
+5. **System settings file:** System-wide settings that override all other settings files.
+6. **Environment variables:** System-wide or session-specific variables, potentially loaded from `.env` files.
+7. **Command-line arguments:** Values passed when launching the CLI.
 
 ## Settings files
 
@@ -40,7 +40,7 @@ In addition to a project settings file, a project's `.blackboxcli` directory can
 
 - [Custom sandbox profiles](#sandboxing) (e.g., `.blackboxcli/sandbox-macos-custom.sb`, `.blackboxcli/sandbox.Dockerfile`).
 
-### Available settings in `settings.json`:
+### Available settings in `settings.json`
 
 - **`contextFileName`** (string or array of strings):
   - **Description:** Specifies the filename for context files (e.g., `BLACKBOX.md`, `AGENTS.md`). Can be a single filename or a list of accepted filenames.
@@ -53,6 +53,7 @@ In addition to a project settings file, a project's `.blackboxcli` directory can
   - **Properties:**
     - **`urlTemplate`** (string): A URL that can contain `{title}` and `{info}` placeholders.
   - **Example:**
+
     ```json
     "bugCommand": {
       "urlTemplate": "https://bug.example.com/new?title={title}&info={info}"
@@ -67,6 +68,7 @@ In addition to a project settings file, a project's `.blackboxcli` directory can
     - **`enableRecursiveFileSearch`** (boolean): Whether to enable searching recursively for filenames under the current tree when completing @ prefixes in the prompt.
     - **`disableFuzzySearch`** (boolean): When `true`, disables the fuzzy search capabilities when searching for files, which can improve performance on projects with a large number of files.
   - **Example:**
+
     ```json
     "fileFiltering": {
       "respectGitIgnore": true,
@@ -79,11 +81,11 @@ In addition to a project settings file, a project's `.blackboxcli` directory can
 
 If you are experiencing performance issues with file searching (e.g., with `@` completions), especially in projects with a very large number of files, here are a few things you can try in order of recommendation:
 
-1.  **Use `.blackboxignore`:** Create a `.blackboxignore` file in your project root to exclude directories that contain a large number of files that you don't need to reference (e.g., build artifacts, logs, `node_modules`). Reducing the total number of files crawled is the most effective way to improve performance.
+1. **Use `.blackboxignore`:** Create a `.blackboxignore` file in your project root to exclude directories that contain a large number of files that you don't need to reference (e.g., build artifacts, logs, `node_modules`). Reducing the total number of files crawled is the most effective way to improve performance.
 
-2.  **Disable Fuzzy Search:** If ignoring files is not enough, you can disable fuzzy search by setting `disableFuzzySearch` to `true` in your `settings.json` file. This will use a simpler, non-fuzzy matching algorithm, which can be faster.
+2. **Disable Fuzzy Search:** If ignoring files is not enough, you can disable fuzzy search by setting `disableFuzzySearch` to `true` in your `settings.json` file. This will use a simpler, non-fuzzy matching algorithm, which can be faster.
 
-3.  **Disable Recursive File Search:** As a last resort, you can disable recursive file search entirely by setting `enableRecursiveFileSearch` to `false`. This will be the fastest option as it avoids a recursive crawl of your project. However, it means you will need to type the full path to files when using `@` completions.
+3. **Disable Recursive File Search:** As a last resort, you can disable recursive file search entirely by setting `enableRecursiveFileSearch` to `false`. This will be the fastest option as it avoids a recursive crawl of your project. However, it means you will need to type the full path to files when using `@` completions.
 
 - **`coreTools`** (array of strings):
   - **Description:** Allows you to specify a list of core tool names that should be made available to the model. This can be used to restrict the set of built-in tools. See [Built-in Tools](../core/tools-api.md#built-in-tools) for a list of core tools. You can also specify command-specific restrictions for tools that support it, like the `ShellTool`. For example, `"coreTools": ["ShellTool(ls -l)"]` will only allow the `ls -l` command to be executed.
@@ -166,6 +168,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
       - `includeTools` (array of strings, optional): List of tool names to include from this MCP server. When specified, only the tools listed here will be available from this server (whitelist behavior). If not specified, all tools from the server are enabled by default.
       - `excludeTools` (array of strings, optional): List of tool names to exclude from this MCP server. Tools listed here will not be available to the model, even if they are exposed by the server. **Note:** `excludeTools` takes precedence over `includeTools` - if a tool is in both lists, it will be excluded.
   - **Example:**
+
     ```json
     "mcpServers": {
       "myPythonServer": {
@@ -225,6 +228,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
     - **`otlpEndpoint`** (string): The endpoint for the OTLP Exporter.
     - **`logPrompts`** (boolean): Whether or not to include the content of user prompts in the logs.
   - **Example:**
+
     ```json
     "telemetry": {
       "enabled": true,
@@ -233,10 +237,12 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
       "logPrompts": false
     }
     ```
+
 - **`usageStatisticsEnabled`** (boolean):
   - **Description:** Enables or disables the collection of usage statistics. See [Usage Statistics](#usage-statistics) for more information.
   - **Default:** `true`
   - **Example:**
+  
     ```json
     "usageStatisticsEnabled": false
     ```
@@ -263,6 +269,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
   - **Description:** Sets the maximum number of turns for a session. If the session exceeds this limit, the CLI will stop processing and start a new chat.
   - **Default:** `-1` (unlimited)
   - **Example:**
+
     ```json
     "maxSessionTurns": 10
     ```
@@ -272,6 +279,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
   - Note: Currently only the `run_shell_command` tool is supported.
   - **Default:** `{}` (Disabled by default)
   - **Example:**
+
     ```json
     "summarizeToolOutput": {
       "run_shell_command": {
@@ -284,6 +292,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
   - **Description:** Specifies environment variables that should be excluded from being loaded from project `.env` files. This prevents project-specific environment variables (like `DEBUG=true`) from interfering with the CLI behavior. Variables from `.blackboxcli/.env` files are never excluded.
   - **Default:** `["DEBUG", "DEBUG_MODE"]`
   - **Example:**
+
     ```json
     "excludedProjectEnvVars": ["DEBUG", "DEBUG_MODE", "NODE_ENV"]
     ```
@@ -292,6 +301,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
   - **Description:** Specifies an array of additional absolute or relative paths to include in the workspace context. Missing directories will be skipped with a warning by default. Paths can use `~` to refer to the user's home directory. This setting can be combined with the `--include-directories` command-line flag.
   - **Default:** `[]`
   - **Example:**
+
     ```json
     "includeDirectories": [
       "/path/to/another/project",
@@ -304,6 +314,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
   - **Description:** Controls the behavior of the `/memory refresh` command. If set to `true`, `BLACKBOX.md` files should be loaded from all directories that are added. If set to `false`, `BLACKBOX.md` should only be loaded from the current directory.
   - **Default:** `false`
   - **Example:**
+
     ```json
     "loadMemoryFromIncludeDirectories": true
     ```
@@ -318,6 +329,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
   - **Properties:**
     - **`contextPercentageThreshold`** (number): A value between 0 and 1 that specifies the token threshold for compression as a percentage of the model's total token limit. For example, a value of `0.6` will trigger compression when the chat history exceeds 60% of the token limit.
   - **Example:**
+
     ```json
     "chatCompression": {
       "contextPercentageThreshold": 0.6
@@ -328,6 +340,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
   - **Description:** Controls whether line numbers are displayed in code blocks in the CLI output.
   - **Default:** `true`
   - **Example:**
+
     ```json
     "showLineNumbers": false
     ```
@@ -339,6 +352,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
     - **`disableLoadingPhrases`** (boolean): Disables the display of loading phrases during operations.
   - **Default:** `{"screenReader": false, "disableLoadingPhrases": false}`
   - **Example:**
+
     ```json
     "accessibility": {
       "screenReader": true,
@@ -350,6 +364,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
   - **Description:** Skips the next speaker check after text responses. When enabled, the system bypasses analyzing whether the AI should continue speaking.
   - **Default:** `false`
   - **Example:**
+
     ```json
     "skipNextSpeakerCheck": true
     ```
@@ -358,6 +373,7 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
   - **Description:** Disables all loop detection checks (streaming and LLM-based). Loop detection prevents infinite loops in AI responses but can generate false positives that interrupt legitimate workflows. Enable this option if you experience frequent false positive loop detection interruptions.
   - **Default:** `false`
   - **Example:**
+
     ```json
     "skipLoopDetection": true
     ```
@@ -370,11 +386,12 @@ If you are experiencing performance issues with file searching (e.g., with `@` c
     - `yolo`: Automatically approve all tool calls.
   - **Default:** `"default"`
   - **Example:**
+
     ```json
     "approvalMode": "plan"
     ```
 
-### Example `settings.json`:
+### Example `settings.json`
 
 ```json
 {
@@ -429,9 +446,9 @@ Environment variables are a common way to configure applications, especially for
 
 The CLI automatically loads environment variables from an `.env` file. The loading order is:
 
-1.  `.env` file in the current working directory.
-2.  If not found, it searches upwards in parent directories until it finds an `.env` file or reaches the project root (identified by a `.git` folder) or the home directory.
-3.  If still not found, it looks for `~/.env` (in the user's home directory).
+1. `.env` file in the current working directory.
+2. If not found, it searches upwards in parent directories until it finds an `.env` file or reaches the project root (identified by a `.git` folder) or the home directory.
+3. If still not found, it looks for `~/.env` (in the user's home directory).
 
 **Environment Variable Exclusion:** Some environment variables (like `DEBUG` and `DEBUG_MODE`) are automatically excluded from project `.env` files by default to prevent interference with the CLI behavior. Variables from `.blackboxcli/.env` files are never excluded. You can customize this behavior using the `excludedProjectEnvVars` setting in your `settings.json` file.
 
@@ -546,7 +563,7 @@ Arguments passed directly when running the CLI can override other configurations
 
 ## Context Files (Hierarchical Instructional Context)
 
-While not strictly configuration for the CLI's _behavior_, context files (defaulting to `BLACKBOX.md` but configurable via the `contextFileName` setting) are crucial for configuring the _instructional context_ (also referred to as "memory"). This powerful feature allows you to give project-specific instructions, coding style guides, or any relevant background information to the AI, making its responses more tailored and accurate to your needs. The CLI includes UI elements, such as an indicator in the footer showing the number of loaded context files, to keep you informed about the active context.
+While not strictly configuration for the CLI's behavior, context files (defaulting to `BLACKBOX.md` but configurable via the `contextFileName` setting) are crucial for configuring the instructional context (also referred to as "memory"). This powerful feature allows you to give project-specific instructions, coding style guides, or any relevant background information to the AI, making its responses more tailored and accurate to your needs. The CLI includes UI elements, such as an indicator in the footer showing the number of loaded context files, to keep you informed about the active context.
 
 - **Purpose:** These Markdown files contain instructions, guidelines, or context that you want the Blackbox model to be aware of during your interactions. The system is designed to manage this instructional context hierarchically.
 
@@ -586,21 +603,21 @@ Here's a conceptual example of what a context file at the root of a TypeScript p
 This example demonstrates how you can provide general project context, specific coding conventions, and even notes about particular files or components. The more relevant and precise your context files are, the better the AI can assist you. Project-specific context files are highly encouraged to establish conventions and context.
 
 - **Hierarchical Loading and Precedence:** The CLI implements a sophisticated hierarchical memory system by loading context files (e.g., `BLACKBOX.md`) from several locations. Content from files lower in this list (more specific) typically overrides or supplements content from files higher up (more general). The exact concatenation order and final context can be inspected using the `/memory show` command. The typical loading order is:
-  1.  **Global Context File:**
+  1. **Global Context File:**
       - Location: `~/.blackboxcli/<contextFileName>` (e.g., `~/.blackboxcli/BLACKBOX.md` in your user home directory).
       - Scope: Provides default instructions for all your projects.
-  2.  **Project Root & Ancestors Context Files:**
+  2. **Project Root & Ancestors Context Files:**
       - Location: The CLI searches for the configured context file in the current working directory and then in each parent directory up to either the project root (identified by a `.git` folder) or your home directory.
       - Scope: Provides context relevant to the entire project or a significant portion of it.
-  3.  **Sub-directory Context Files (Contextual/Local):**
-      - Location: The CLI also scans for the configured context file in subdirectories _below_ the current working directory (respecting common ignore patterns like `node_modules`, `.git`, etc.). The breadth of this search is limited to 200 directories by default, but can be configured with a `memoryDiscoveryMaxDirs` field in your `settings.json` file.
+  3. **Sub-directory Context Files (Contextual/Local):**
+      - Location: The CLI also scans for the configured context file in subdirectories below the current working directory (respecting common ignore patterns like `node_modules`, `.git`, etc.). The breadth of this search is limited to 200 directories by default, but can be configured with a `memoryDiscoveryMaxDirs` field in your `settings.json` file.
       - Scope: Allows for highly specific instructions relevant to a particular component, module, or subsection of your project.
 - **Concatenation & UI Indication:** The contents of all found context files are concatenated (with separators indicating their origin and path) and provided as part of the system prompt. The CLI footer displays the count of loaded context files, giving you a quick visual cue about the active instructional context.
 - **Importing Content:** You can modularize your context files by importing other Markdown files using the `@path/to/file.md` syntax. For more details, see the [Memory Import Processor documentation](../core/memport.md).
 - **Commands for Memory Management:**
   - Use `/memory refresh` to force a re-scan and reload of all context files from all configured locations. This updates the AI's instructional context.
   - Use `/memory show` to display the combined instructional context currently loaded, allowing you to verify the hierarchy and content being used by the AI.
-  - See the [Commands documentation](./commands.md#memory) for full details on the `/memory` command and its sub-commands (`show` and `refresh`).
+  - See the [Commands documentation](./commands.md) for full details on the `/memory` command and its sub-commands (`show` and `refresh`).
 
 By understanding and utilizing these configuration layers and the hierarchical nature of context files, you can effectively manage the AI's memory and tailor Blackbox Code's responses to your specific needs and projects.
 
